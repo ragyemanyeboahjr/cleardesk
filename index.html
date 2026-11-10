@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Clear Desk Dallas sorts invoices and receipts, drafts payment reminders for you to approve, and sends a weekly summary. Free first week for Dallas small businesses.">
+<style>body{margin:0}[hidden]{display:none!important}img{max-width:100%}:root{padding-block:env(safe-area-inset-top,0px) env(safe-area-inset-bottom,0px)}</style>
+<title>Clear Desk Dallas</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: single white page, narrow centered column; navy type, gold used only for rules, numerals and small marks. Always white by design, no dark theme. */
+:root{
+  --bg:#ffffff; --surface:#ffffff; --tint:#f6f7fa; --line:#e3e6ee;
+  --navy:#0f2340; --navy2:#4a5873; --gold:#c29a3a; --gold-ink:#8a6a1a; --gold-soft:#f7f0de;
+  --good:#1d6b43; --good-soft:#e3f2ea;
+  --display:'Fraunces','Georgia',serif; --body:'Manrope','Segoe UI',system-ui,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--navy);font-family:var(--body);font-size:16px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.col{max-width:960px;margin:0 auto}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bg);border-bottom:1px solid var(--line);
+  margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px))) calc(-1 * max(16px,env(safe-area-inset-right,0px)));
+  padding:14px max(16px,env(safe-area-inset-right,0px)) 14px max(16px,env(safe-area-inset-left,0px))}
+.nav-in{max-width:960px;margin:0 auto;display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center;justify-content:space-between}
+.logo{font-family:var(--display);font-weight:600;font-size:20px;letter-spacing:-.01em;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.logo small{font-family:var(--body);font-weight:500;font-size:12px;color:var(--navy2);letter-spacing:.02em}
+.navlinks{display:flex;gap:20px;font-size:14px;font-weight:600}
+a{color:var(--navy)}
+.navlinks a{text-decoration:none;padding:4px 0;border-bottom:2px solid transparent}
+.navlinks a:hover{border-color:var(--gold)}
+a:focus-visible,button:focus-visible,textarea:focus-visible{outline:2px solid var(--navy);outline-offset:3px}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-ink)}
+h1,h2,h3{font-family:var(--display);font-weight:500;letter-spacing:-.015em;text-wrap:balance;margin:0}
+h1{font-size:clamp(36px,7vw,64px);line-height:1.05}
+h2{font-size:clamp(26px,4.5vw,36px);line-height:1.15}
+h3{font-size:19px;font-family:var(--body);font-weight:700;letter-spacing:0}
+p{margin:0}
+.lede{font-size:18px;color:var(--navy2);max-width:56ch}
+.hero{padding-block:72px 64px;display:grid;gap:24px;justify-items:start}
+.rule{width:56px;height:3px;background:var(--gold);border:0;margin:0}
+.btn{display:inline-block;font:inherit;font-weight:700;font-size:15px;text-decoration:none;cursor:pointer;
+  background:var(--navy);color:#fff;border:2px solid var(--navy);padding:12px 22px;border-radius:4px}
+.btn:hover{background:#17335c}
+.btn.ghost{background:#fff;color:var(--navy)}
+.btn.ghost:hover{background:var(--tint)}
+.btn.sm{padding:7px 14px;font-size:14px}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.cta-note{font-size:14px;color:var(--navy2)}
+section{padding-block:56px;border-top:1px solid var(--line)}
+.sec-head{display:grid;gap:10px;margin-bottom:32px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:32px}
+.step{display:grid;gap:8px;align-content:start;min-width:0}
+.step .n{font-family:var(--display);font-size:40px;line-height:1;color:var(--gold)}
+.step p{color:var(--navy2);font-size:15px}
+.demo{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:24px;align-items:start}
+@media(max-width:820px){.demo{grid-template-columns:minmax(0,1fr)}}
+.card{border:1px solid var(--line);border-radius:6px;background:var(--surface);min-width:0}
+.card-h{display:flex;flex-wrap:wrap;gap:4px 12px;justify-content:space-between;align-items:baseline;padding:14px 18px;border-bottom:1px solid var(--line)}
+.card-h b{font-family:var(--display);font-weight:500;font-size:18px}
+.tag{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gold-ink)}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-bottom:1px solid var(--line)}
+.stat{padding:14px 18px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.stat:nth-child(2n){border-right:0}.stat:nth-last-child(-n+2){border-bottom:0}
+.stat .k{font-size:12px;color:var(--navy2);letter-spacing:.04em}
+.stat .v{font-family:var(--display);font-size:28px;line-height:1.2;font-variant-numeric:tabular-nums}
+.lines{padding:6px 18px 14px;display:grid}
+.line{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}
+.line:last-child{border-bottom:0}
+.line span:last-child{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+.late{color:var(--gold-ink)}
+.draft{padding:16px 18px;display:grid;gap:12px}
+.mail{background:var(--tint);border-radius:4px;padding:12px 14px;font-size:14px;white-space:pre-wrap}
+textarea{width:100%;min-height:190px;font:inherit;font-size:14px;color:var(--navy);background:#fff;border:2px solid var(--gold);border-radius:4px;padding:12px 14px;resize:vertical}
+.status{font-size:13px;font-weight:700;padding:3px 10px;border-radius:99px;background:var(--gold-soft);color:var(--gold-ink);white-space:nowrap}
+.status.ok{background:var(--good-soft);color:var(--good)}
+.btns{display:flex;flex-wrap:wrap;gap:8px}
+.fine{font-size:13px;color:var(--navy2)}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}
+.two ul{margin:12px 0 0;padding:0;list-style:none;display:grid;gap:10px}
+.two li{padding-left:22px;position:relative;color:var(--navy2);font-size:15px}
+.two li::before{content:"";position:absolute;left:0;top:.7em;width:10px;height:2px;background:var(--gold)}
+.contact{background:var(--tint);border-radius:6px;padding:32px;display:grid;gap:20px}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.cbox{background:#fff;border:1px solid var(--line);border-radius:4px;padding:14px 16px;display:grid;gap:8px;min-width:0}
+.cbox .k{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-ink)}
+.cbox .val{font-weight:600;overflow-wrap:anywhere;user-select:all}
+footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;color:var(--navy2);display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between}
+.mock{background:var(--gold-soft);color:var(--gold-ink);font-size:13px;font-weight:600;text-align:center;padding:8px 12px;margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px))) calc(-1 * max(16px,env(safe-area-inset-right,0px)))}
+.ctl{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line);font-size:14px}
+.ctl input[type=range]{flex:1 1 180px;min-width:0;accent-color:var(--navy)}
+.ctl output{font-family:var(--display);font-size:20px;min-width:3ch;font-variant-numeric:tabular-nums}
+.tw{overflow-x:auto}
+.tw table{border-collapse:collapse;width:100%;min-width:620px;font-size:14px}
+.tw th{text-align:left;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--navy2);font-weight:600;padding:10px 18px;border-bottom:1px solid var(--line);white-space:nowrap}
+.tw td{padding:10px 18px;border-bottom:1px solid var(--line);vertical-align:middle}
+.tw td.r,.tw th.r{text-align:right;font-variant-numeric:tabular-nums}
+.tw tr.flag td{background:var(--gold-soft)}
+.tw tr.dim td{color:var(--navy2);background:#fff}
+.fl{display:inline-block;font-size:12px;font-weight:700;padding:2px 9px;border-radius:99px;background:#fff;border:1px solid var(--gold);color:var(--gold-ink);margin:2px 6px 2px 0;white-space:nowrap}
+.sumline{padding:14px 18px;display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:space-between;align-items:baseline}
+.sumline b{font-family:var(--display);font-weight:500;font-size:18px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--navy);color:#fff;padding:10px 16px;border-radius:4px;font-size:14px;z-index:20;max-width:90vw}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+
+<nav><div class="nav-in">
+  <div class="logo">Clear Desk Dallas <small>by Richard Agyeman-Yeboah Jr.</small></div>
+  <div class="navlinks"><a href="#how">How it works</a><a href="#see">See it working</a><a href="#audit">Expense check</a><a href="#scope">What we do</a><a href="#contact">Contact</a></div>
+</div></nav>
+
+<div class="col">
+<header class="hero">
+  <span class="eyebrow">Back-office help for Dallas small businesses</span>
+  <h1>Your paperwork, handled. Free for your first week.</h1>
+  <hr class="rule">
+  <p class="lede">We sort your invoices and receipts into one clean spreadsheet, draft payment reminders for overdue invoices, and send you a short summary every week. You approve everything before it goes out.</p>
+  <div class="cta-row"><a class="btn" href="#contact">Ask for a free week</a><a class="btn ghost" href="#see">See a sample</a></div>
+  <p class="cta-note">No contract to try it. You choose which documents to share.</p>
+</header>
+
+<section id="how">
+  <div class="sec-head"><span class="eyebrow">How it works</span><h2>Three steps, about a week</h2></div>
+  <div class="steps">
+    <div class="step"><span class="n">1</span><h3>You share your paperwork</h3><p>Send a week of invoices and receipts by email or shared folder. Only what you choose.</p></div>
+    <div class="step"><span class="n">2</span><h3>We sort and draft</h3><p>Everything goes into a clear spreadsheet. We draft polite reminders for any overdue invoices.</p></div>
+    <div class="step"><span class="n">3</span><h3>You approve and review</h3><p>Nothing is sent without your yes. You get a one-page summary of money owed and spent.</p></div>
+  </div>
+</section>
+
+<section id="see">
+  <div class="sec-head"><span class="eyebrow">See it working</span><h2>What you would get</h2><p class="lede">A sample for a made-up landscaping company. Try the approval below.</p></div>
+  <div class="demo">
+    <div class="card">
+      <div class="card-h"><b>Weekly summary</b><span class="tag">Sample data</span></div>
+      <div class="stats">
+        <div class="stat"><div class="k">Money owed to you</div><div class="v">$10,380</div></div>
+        <div class="stat"><div class="k">Past due</div><div class="v">4 · $4,410</div></div>
+        <div class="stat"><div class="k">Receipts sorted</div><div class="v">9</div></div>
+        <div class="stat"><div class="k">Hours saved</div><div class="v">5.0</div></div>
+      </div>
+      <div class="lines">
+        <div class="line"><span>Harbor Dental</span><span class="late">$1,450 · 22 days late</span></div>
+        <div class="line"><span>Sunrise Yoga Studio</span><span class="late">$540 · 7 days late</span></div>
+        <div class="line"><span>Reyes Property Group</span><span class="late">$2,100 · 6 days late</span></div>
+        <div class="line"><span>Bell Family Home</span><span class="late">$320 · 3 days late</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-h"><b>Reminder to approve</b><span class="status" id="st">Needs your yes</span></div>
+      <div class="draft">
+        <div id="view" class="mail"></div>
+        <textarea id="ta" aria-label="Edit reminder" hidden></textarea>
+        <div class="btns" id="btns"></div>
+        <p class="fine">Demo only. Nothing is sent from this page.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="audit">
+  <div class="sec-head"><span class="eyebrow">Expense check</span><h2>Spot the charges worth a second look</h2><p class="lede">Each week we check your expenses for duplicates, unusually large charges and new vendors. You decide what counts as normal.</p></div>
+  <div class="card">
+    <div class="card-h"><b>Flagged this week</b><span class="tag">Sample data</span></div>
+    <div class="ctl"><label for="lim">Flag charges above</label><input type="range" id="lim" min="1.1" max="3" step="0.1" value="2"><output id="limv" for="lim">2.0x</output><span>that vendor's average</span></div>
+    <div class="tw"><table><thead><tr><th>Date</th><th>Vendor</th><th class="r">Amount</th><th class="r">Usual</th><th>Flag</th></tr></thead><tbody id="axrows"></tbody></table></div>
+    <div class="sumline"><b id="axsum"></b><span class="fine">Drag the slider to see flags change.</span></div>
+  </div>
+  <p class="fine" style="margin-top:14px;max-width:70ch">A flag is a question, not an accusation. Many are normal, like a one-time repair. We ask you before anything is changed or disputed. Made-up figures for a sample landscaping company.</p>
+</section>
+
+<section id="scope">
+  <div class="sec-head"><span class="eyebrow">What we do</span><h2>Clear about the limits</h2></div>
+  <div class="two">
+    <div><h3>We do</h3><ul>
+      <li>Sort invoices and receipts into a spreadsheet</li>
+      <li>Draft payment reminders for you to approve</li>
+      <li>Send a short weekly summary</li>
+      <li>Flag anything unclear instead of guessing</li></ul></div>
+    <div><h3>We do not</h3><ul>
+      <li>Give accounting, tax or legal advice</li>
+      <li>Send anything without your approval</li>
+      <li>Need patient or customer health records</li>
+      <li>Keep your files after the pilot if you ask us to delete them</li></ul></div>
+  </div>
+</section>
+
+<section id="soon">
+  <div class="sec-head"><span class="eyebrow">Coming soon</span><h2>More help on the way</h2></div>
+  <div class="two">
+    <div><span class="tag">Coming soon</span><h3 style="margin-top:6px">Missing-paperwork chasing</h3><p class="fine" style="font-size:15px;margin-top:6px">A weekly list of invoices and receipts we have not received, with a drafted request for you to approve.</p></div>
+    <div><span class="tag">Coming soon</span><h3 style="margin-top:6px">30-day cash-in forecast</h3><p class="fine" style="font-size:15px;margin-top:6px">A simple view of the money due to you over the next 30 days, based on your open invoices.</p></div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact">
+    <div class="sec-head" style="margin:0"><span class="eyebrow">Contact</span><h2>Ask for your free week</h2><p class="lede">Call or email Richard. A 10-minute conversation is enough to get started.</p></div>
+    <div class="cgrid">
+      <div class="cbox"><span class="k">Phone</span><span class="val" id="v-ph">832-670-3411</span><button class="btn sm ghost" data-copy="v-ph">Copy number</button></div>
+      <div class="cbox"><span class="k">Email</span><span class="val" id="v-em">ragyemanyeboahjr@gmail.com</span><button class="btn sm ghost" data-copy="v-em">Copy email</button></div>
+    </div>
+  </div>
+</section>
+
+<footer><span>Clear Desk Dallas · Dallas, Texas</span><span>Back-office support only. Not accounting, tax or legal advice.</span></footer>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+(function(){
+var $=function(s){return document.querySelector(s)};
+var tt;function toast(m){var t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(tt);tt=setTimeout(function(){t.hidden=true},2400)}
+var text='Hi Harbor Dental team,\n\nA quick reminder that invoice INV-1041 for $1,450 is still open. Our records show that it is now 22 days past its due date of Oct 15. If you already sent payment, please ignore this note and thank you.\n\nYou can reply to this email with any questions.\n\nThank you,\nCarlos Lopez\nLopez Landscaping';
+var state='pending',editing=false;
+function render(){
+  $('#view').textContent=text;$('#view').hidden=editing;$('#ta').hidden=!editing;
+  var st=$('#st');st.className='status'+(state==='approved'?' ok':'');
+  st.textContent=state==='approved'?'Approved':'Needs your yes';
+  var b=$('#btns');
+  if(state==='approved')b.innerHTML='<button class="btn sm ghost" data-a="undo">Undo</button>';
+  else if(editing)b.innerHTML='<button class="btn sm" data-a="save">Save changes</button><button class="btn sm ghost" data-a="cancel">Cancel</button>';
+  else b.innerHTML='<button class="btn sm" data-a="approve">Approve</button><button class="btn sm ghost" data-a="edit">Edit</button>';
+}
+$('#btns').addEventListener('click',function(e){var a=e.target.getAttribute('data-a');if(!a)return;
+  if(a==='approve'){state='approved'}else if(a==='undo'){state='pending'}
+  else if(a==='edit'){editing=true;$('#ta').value=text}
+  else if(a==='cancel'){editing=false}
+  else if(a==='save'){text=$('#ta').value;editing=false;toast('Saved')}
+  render();});
+document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){
+  var el=document.getElementById(b.getAttribute('data-copy'));var v=el.textContent;
+  function sel(){var r=document.createRange();r.selectNodeContents(el);var s=getSelection();s.removeAllRanges();s.addRange(r);toast('Selected. Press copy.')}
+  try{navigator.clipboard.writeText(v).then(function(){toast('Copied')},sel)}catch(x){sel()}
+});});
+var ex=[
+ {v:'Trinity Landscape Supply',d:'Nov 2',a:512.40,avg:480},
+ {v:'Fuel stop, I-35',d:'Nov 1',a:78.45,avg:70},
+ {v:'Fuel stop, I-35',d:'Nov 1',a:78.45,avg:70},
+ {v:'Equipment rental',d:'Oct 30',a:620.00,avg:220},
+ {v:'Mobile phone plan',d:'Nov 1',a:89.99,avg:89.99},
+ {v:'Oak Cliff Garden Center',d:'Oct 28',a:140.00,avg:125},
+ {v:'Quick tire shop',d:'Oct 29',a:182.00,avg:61.50},
+ {v:'Lakeside Pool Supply',d:'Oct 31',a:240.00,avg:null},
+ {v:'Invoicing app',d:'Oct 31',a:35.00,avg:35}
+];
+var okSet={};
+function m2(n){return '$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function axFlags(i,lim){
+ var r=ex[i],f=[],first=-1;
+ for(var j=0;j<ex.length;j++){if(ex[j].v===r.v&&ex[j].d===r.d&&ex[j].a===r.a){first=j;break}}
+ if(first!==i)f.push('Possible duplicate');
+ if(r.avg===null)f.push('New vendor');
+ else if(r.a>r.avg*lim)f.push((r.a/r.avg).toFixed(1)+'x usual');
+ return f;
+}
+function axRender(){
+ var lim=parseFloat($('#lim').value);$('#limv').textContent=lim.toFixed(1)+'x';
+ var n=0,tot=0;
+ $('#axrows').innerHTML=ex.map(function(r,i){
+  var f=axFlags(i,lim),on=f.length>0,ok=!!okSet[i];
+  if(on&&!ok){n++;tot+=r.a}
+  var cell=on?(f.map(function(x){return '<span class="fl">'+x+'</span>'}).join('')+(ok?'<span class="fine">Marked fine</span> ':'')+'<button class="btn sm ghost" data-ok="'+i+'">'+(ok?'Undo':'Looks fine')+'</button>'):'<span class="fine">OK</span>';
+  return '<tr class="'+(on&&!ok?'flag':(on?'dim':''))+'"><td>'+r.d+'</td><td>'+r.v+'</td><td class="r">'+m2(r.a)+'</td><td class="r">'+(r.avg===null?'none':m2(r.avg))+'</td><td>'+cell+'</td></tr>';
+ }).join('');
+ $('#axsum').textContent=n===0?'Nothing to review at this limit':(n+(n===1?' charge':' charges')+' to review, '+m2(tot));
+}
+$('#lim').addEventListener('input',axRender);
+$('#axrows').addEventListener('click',function(e){var b=e.target.closest('[data-ok]');if(!b)return;var i=b.getAttribute('data-ok');if(okSet[i])delete okSet[i];else okSet[i]=true;axRender()});
+axRender();
+render();
+})();
+</script>
+
+</body>
+</html>
