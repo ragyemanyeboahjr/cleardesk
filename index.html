@@ -104,6 +104,14 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
 .fl{display:inline-block;font-size:12px;font-weight:700;padding:2px 9px;border-radius:99px;background:#fff;border:1px solid var(--gold);color:var(--gold-ink);margin:2px 6px 2px 0;white-space:nowrap}
 .sumline{padding:14px 18px;display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:space-between;align-items:baseline}
 .sumline b{font-family:var(--display);font-weight:500;font-size:18px}
+.cform{display:grid;gap:14px;margin-top:8px}
+.cform .row2{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.cform label{display:grid;gap:6px;font-size:13px;font-weight:700;letter-spacing:.04em;color:var(--navy)}
+.cform input,.cform textarea{font:inherit;font-size:15px;font-weight:400;letter-spacing:0;color:var(--navy);background:#fff;border:1px solid var(--line);border-radius:4px;padding:10px 12px;width:100%;min-width:0}
+.cform textarea{min-height:110px;resize:vertical}
+.cform input:focus-visible,.cform textarea:focus-visible{outline:2px solid var(--navy);outline-offset:1px;border-color:var(--navy)}
+.cform .hp{position:absolute;left:-9999px;height:0;overflow:hidden}
+.cform-msg{font-size:14px;font-weight:600;min-height:1.4em}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--navy);color:#fff;padding:10px 16px;border-radius:4px;font-size:14px;z-index:20;max-width:90vw}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
@@ -207,6 +215,20 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
       <div class="cbox"><span class="k">Phone</span><span class="val" id="v-ph">832-670-3411</span><button class="btn sm ghost" data-copy="v-ph">Copy number</button></div>
       <div class="cbox"><span class="k">Email</span><span class="val" id="v-em">ragyemanyeboahjr@gmail.com</span><button class="btn sm ghost" data-copy="v-em">Copy email</button></div>
     </div>
+    <form class="cform" id="cf" action="https://formspree.io/f/xbggnogg" method="POST">
+      <p class="fine">Or send a message. Please do not include financial account numbers or patient information.</p>
+      <div class="row2">
+        <label for="cf-name">Your name<input id="cf-name" name="name" type="text" autocomplete="name" required></label>
+        <label for="cf-biz">Business name<input id="cf-biz" name="business" type="text" autocomplete="organization"></label>
+      </div>
+      <div class="row2">
+        <label for="cf-email">Email<input id="cf-email" name="email" type="email" autocomplete="email" required></label>
+        <label for="cf-phone">Phone (optional)<input id="cf-phone" name="phone" type="tel" autocomplete="tel"></label>
+      </div>
+      <label for="cf-msg">How can we help?<textarea id="cf-msg" name="message" required></textarea></label>
+      <div class="hp" aria-hidden="true"><label>Leave this empty<input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></div>
+      <div class="cta-row"><button class="btn" type="submit" id="cf-send">Send message</button><span class="cform-msg" id="cf-msg-out" role="status" aria-live="polite"></span></div>
+    </form>
   </div>
 </section>
 
@@ -276,6 +298,18 @@ function axRender(){
 }
 $('#lim').addEventListener('input',axRender);
 $('#axrows').addEventListener('click',function(e){var b=e.target.closest('[data-ok]');if(!b)return;var i=b.getAttribute('data-ok');if(okSet[i])delete okSet[i];else okSet[i]=true;axRender()});
+var cf=document.getElementById('cf');
+if(cf){cf.addEventListener('submit',function(e){
+  e.preventDefault();
+  var out=document.getElementById('cf-msg-out'),btn=document.getElementById('cf-send');
+  btn.disabled=true;out.textContent='Sending...';
+  fetch(cf.action,{method:'POST',body:new FormData(cf),headers:{'Accept':'application/json'}})
+  .then(function(r){
+    if(r.ok){cf.reset();out.textContent='Thank you. Richard will reply soon.'}
+    else{out.textContent='Something went wrong. Please call or email instead.'}
+  }).catch(function(){out.textContent='Something went wrong. Please call or email instead.'})
+  .then(function(){btn.disabled=false});
+});}
 axRender();
 render();
 })();
