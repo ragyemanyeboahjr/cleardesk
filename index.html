@@ -130,6 +130,22 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
 .faq details[open] summary::after{content:"\2212"}
 .faq summary:focus-visible{outline:2px solid var(--navy);outline-offset:4px}
 .faq details p{color:var(--navy2);margin-top:10px;max-width:65ch}
+.only-m{display:none}
+@media(max-width:640px){
+  .only-m{display:grid;gap:10px}
+  .navlinks,#who,#audit,.demo,.hero .btn.ghost,.hero .cta-note,.cgrid,.desk{display:none}
+  nav{padding-block:10px}
+  .logo small{display:none}
+  .hero{padding-block:36px 32px;gap:16px}
+  h1{font-size:32px}
+  .lede{font-size:16px}
+  section{padding-block:32px}
+  .sec-head{margin-bottom:20px}
+  .steps{gap:20px}
+  .step .n{font-size:30px}
+  .contact{padding:20px}
+  #see .sec-head{margin-bottom:16px}
+}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--navy);color:#fff;padding:10px 16px;border-radius:4px;font-size:14px;z-index:20;max-width:90vw}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
@@ -172,7 +188,7 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
 </section>
 
 <section id="see">
-  <div class="sec-head"><span class="eyebrow">See it working</span><h2>What you would get</h2><p class="lede">A sample for a made-up landscaping company. Try the approval below.</p></div>
+  <div class="sec-head"><span class="eyebrow">See it working</span><h2>What you would get</h2><p class="lede">A sample for a made-up landscaping company. <span class="desk">Try the approval below.</span></p></div>
   <div class="demo">
     <div class="card">
       <div class="card-h"><b>Weekly summary</b><span class="tag">Sample data</span></div>
@@ -242,6 +258,7 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
 <section id="contact">
   <div class="contact">
     <div class="sec-head" style="margin:0"><span class="eyebrow">Contact</span><h2>Ask for your free week</h2><p class="lede">Call or email Richard. A 10-minute conversation is enough to get started.</p></div>
+    <div class="only-m"><a class="btn" href="tel:+18326703411" style="text-align:center">Call Richard: 832-670-3411</a><a class="btn ghost" href="mailto:ragyemanyeboahjr@gmail.com" style="text-align:center">Email Richard</a></div>
     <div class="cgrid">
       <div class="cbox"><span class="k">Phone</span><span class="val" id="v-ph">832-670-3411</span><button class="btn sm ghost" data-copy="v-ph">Copy number</button></div>
       <div class="cbox"><span class="k">Email</span><span class="val" id="v-em">ragyemanyeboahjr@gmail.com</span><button class="btn sm ghost" data-copy="v-em">Copy email</button></div>
