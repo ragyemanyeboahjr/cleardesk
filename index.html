@@ -4,6 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="Clear Desk Dallas sorts invoices and receipts, drafts payment reminders for you to approve, and sends a weekly summary. Free first week for Dallas small businesses.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Clear Desk Dallas">
+<meta property="og:description" content="Your paperwork, handled. Free for your first week. Back-office help for Dallas small businesses.">
+<meta property="og:image" content="https://ragyemanyeboahjr.github.io/cleardesk/og.png">
+<meta property="og:url" content="https://ragyemanyeboahjr.github.io/cleardesk/">
+<meta name="twitter:card" content="summary_large_image">
 <style>body{margin:0}[hidden]{display:none!important}img{max-width:100%}:root{padding-block:env(safe-area-inset-top,0px) env(safe-area-inset-bottom,0px)}</style>
 <title>Clear Desk Dallas</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -112,6 +119,17 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
 .cform input:focus-visible,.cform textarea:focus-visible{outline:2px solid var(--navy);outline-offset:1px;border-color:var(--navy)}
 .cform .hp{position:absolute;left:-9999px;height:0;overflow:hidden}
 .cform-msg{font-size:14px;font-weight:600;min-height:1.4em}
+.who{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px}
+.who div{border-top:3px solid var(--gold);padding-top:12px;min-width:0}
+.who p{color:var(--navy2);font-size:15px;margin-top:4px}
+.faq details{border-bottom:1px solid var(--line);padding:16px 0}
+.faq details:first-of-type{border-top:1px solid var(--line)}
+.faq summary{cursor:pointer;font-weight:700;font-size:17px;list-style:none;display:flex;justify-content:space-between;gap:16px;align-items:baseline}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-family:var(--display);font-size:24px;color:var(--gold-ink);line-height:1}
+.faq details[open] summary::after{content:"\2212"}
+.faq summary:focus-visible{outline:2px solid var(--navy);outline-offset:4px}
+.faq details p{color:var(--navy2);margin-top:10px;max-width:65ch}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--navy);color:#fff;padding:10px 16px;border-radius:4px;font-size:14px;z-index:20;max-width:90vw}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
@@ -121,7 +139,7 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
 
 <nav><div class="nav-in">
   <div class="logo">Clear Desk Dallas <small>by Richard Agyeman-Yeboah Jr.</small></div>
-  <div class="navlinks"><a href="#how">How it works</a><a href="#see">See it working</a><a href="#audit">Expense check</a><a href="#scope">What we do</a><a href="#contact">Contact</a></div>
+  <div class="navlinks"><a href="#how">How it works</a><a href="#see">See it working</a><a href="#audit">Expense check</a><a href="#scope">What we do</a><a href="#faq">FAQ</a><a href="#contact">Contact</a></div>
 </div></nav>
 
 <div class="col">
@@ -140,6 +158,16 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
     <div class="step"><span class="n">1</span><h3>You share your paperwork</h3><p>Send a week of invoices and receipts by email or shared folder. Only what you choose.</p></div>
     <div class="step"><span class="n">2</span><h3>We sort and draft</h3><p>Everything goes into a clear spreadsheet. We draft polite reminders for any overdue invoices.</p></div>
     <div class="step"><span class="n">3</span><h3>You approve and review</h3><p>Nothing is sent without your yes. You get a one-page summary of money owed and spent.</p></div>
+  </div>
+</section>
+
+<section id="who">
+  <div class="sec-head"><span class="eyebrow">Who it's for</span><h2>Built for small Dallas businesses</h2></div>
+  <div class="who">
+    <div><h3>Dental and medical offices</h3><p>Supplier invoices and receipts, never patient records.</p></div>
+    <div><h3>Home service companies</h3><p>HVAC, plumbing, landscaping and cleaning crews with a lot of paper.</p></div>
+    <div><h3>Salons and studios</h3><p>Product orders, supply bills and what clients still owe.</p></div>
+    <div><h3>Small property managers</h3><p>Vendor invoices and late-payment follow-up.</p></div>
   </div>
 </section>
 
@@ -197,6 +225,16 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
       <li>Send anything without your approval</li>
       <li>Need patient or customer health records</li>
       <li>Keep your files after the pilot if you ask us to delete them</li></ul></div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="sec-head"><span class="eyebrow">Questions</span><h2>Common questions</h2></div>
+  <div class="faq">
+    <details><summary>Do you need access to my bank account?</summary><p>No. We never ask for bank logins or access to payment systems. We only work with the invoices and receipts you choose to send.</p></details>
+    <details><summary>What does it cost after the free week?</summary><p>We agree on a simple monthly price with you before the free week ends. You are never charged without your yes.</p></details>
+    <details><summary>Who sees my documents?</summary><p>Only Richard, and only what you choose to share. We use them to do the work you asked for, and we delete your files if you ask.</p></details>
+    <details><summary>Can I cancel?</summary><p>Yes. Either side can end the pilot at any time.</p></details>
   </div>
 </section>
 
