@@ -238,14 +238,6 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
   </div>
 </section>
 
-<section id="soon">
-  <div class="sec-head"><span class="eyebrow">Coming soon</span><h2>More help on the way</h2></div>
-  <div class="two">
-    <div><span class="tag">Coming soon</span><h3 style="margin-top:6px">Missing-paperwork chasing</h3><p class="fine" style="font-size:15px;margin-top:6px">A weekly list of invoices and receipts we have not received, with a drafted request for you to approve.</p></div>
-    <div><span class="tag">Coming soon</span><h3 style="margin-top:6px">30-day cash-in forecast</h3><p class="fine" style="font-size:15px;margin-top:6px">A simple view of the money due to you over the next 30 days, based on your open invoices.</p></div>
-  </div>
-</section>
-
 <section id="contact">
   <div class="contact">
     <div class="sec-head" style="margin:0"><span class="eyebrow">Contact</span><h2>Ask for your free week</h2><p class="lede">Call or email Richard. A 10-minute conversation is enough to get started.</p></div>
@@ -280,7 +272,7 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
 (function(){
 var $=function(s){return document.querySelector(s)};
 var tt;function toast(m){var t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(tt);tt=setTimeout(function(){t.hidden=true},2400)}
-var text='Hi Harbor Dental team,\n\nA quick reminder that invoice INV-1041 for $1,450 is still open. Our records show that it is now 22 days past its due date of Oct 15. If you already sent payment, please ignore this note and thank you.\n\nYou can reply to this email with any questions.\n\nThank you,\nCarlos Lopez\nLopez Landscaping';
+var text='Hi Harbor Dental team,\n\nA quick reminder that invoice INV-1041 for $1,450 is now 22 days past due. If you already sent payment, please ignore this note.\n\nThank you,\nCarlos Lopez\nLopez Landscaping';
 var state='pending',editing=false;
 function render(){
   $('#view').textContent=text;$('#view').hidden=editing;$('#ta').hidden=!editing;
@@ -307,8 +299,6 @@ var ex=[
  {v:'Fuel stop, I-35',d:'Nov 1',a:78.45,avg:70},
  {v:'Fuel stop, I-35',d:'Nov 1',a:78.45,avg:70},
  {v:'Equipment rental',d:'Oct 30',a:620.00,avg:220},
- {v:'Mobile phone plan',d:'Nov 1',a:89.99,avg:89.99},
- {v:'Oak Cliff Garden Center',d:'Oct 28',a:140.00,avg:125},
  {v:'Quick tire shop',d:'Oct 29',a:182.00,avg:61.50},
  {v:'Lakeside Pool Supply',d:'Oct 31',a:240.00,avg:null},
  {v:'Invoicing app',d:'Oct 31',a:35.00,avg:35}
