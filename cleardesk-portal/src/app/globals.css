@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy: #0f2340;
+  --color-gold: #c29a3a;
+  --color-muted: #4a5873;
+  --color-line: #e3e6ee;
+  --color-late: #a8322d;
+  --font-serif: var(--font-fraunces), Georgia, serif;
+  --font-sans: var(--font-manrope), system-ui, sans-serif;
+}
+
+html,
+body {
+  background: #ffffff;
+  color: var(--color-navy);
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Small helpers used across pages */
+@layer components {
+  .label {
+    @apply text-[11px] font-bold uppercase tracking-[0.08em] text-muted;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-md bg-navy px-4 py-2 text-sm font-semibold text-white transition hover:bg-navy/90 disabled:opacity-50;
+  }
+  .btn-quiet {
+    @apply inline-flex items-center justify-center gap-2 rounded-md border border-line bg-white px-4 py-2 text-sm font-semibold text-navy transition hover:border-navy/40 disabled:opacity-50;
+  }
+  .input {
+    @apply w-full rounded-md border border-line bg-white px-3 py-2 text-sm text-navy outline-none placeholder:text-muted/60 focus:border-gold;
+  }
+  .rule {
+    @apply border-0 border-t border-gold;
+  }
+  .card {
+    @apply rounded-lg border border-line bg-white;
+  }
+  .h1 {
+    @apply font-serif text-3xl font-semibold tracking-tight text-navy;
+  }
+  .h2 {
+    @apply font-serif text-xl font-semibold text-navy;
+  }
+}

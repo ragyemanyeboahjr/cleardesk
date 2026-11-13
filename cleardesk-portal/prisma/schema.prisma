@@ -1,0 +1,218 @@
+// Clear Desk Dallas portal — data model.
+//
+// Written to move to Postgres later: SQLite has no enums or JSON columns, so
+// status fields are plain strings (allowed values documented next to each) and
+// snapshot data is stored as JSON text. Money is always integer cents.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  name         String
+  passwordHash String
+  role         String // "client" | "admin"
+  clientId     String?
+  client       Client?   @relation(fields: [clientId], references: [id])
+  createdAt    DateTime  @default(now())
+  sessions     Session[]
+  uploads      Upload[]
+  messages     QuestionMessage[]
+}
+
+model Session {
+  id        String   @id // sha256 of the cookie token, never the token itself
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+model Client {
+  id               String    @id @default(cuid())
+  name             String
+  businessType     String // "dental" | "salon" | "home_services" | "property_management" | "other"
+  plan             String // "pilot" | "ongoing"
+  pilotEndsAt      DateTime?
+  termsAcceptedAt  DateTime
+  summaryDay       Int       @default(5) // 0 = Sunday … 6 = Saturday
+  summaryTime      String    @default("09:00") // HH:mm, America/Chicago
+  deliveryEmail    String
+  timezone         String    @default("America/Chicago")
+  scheduleSetAt    DateTime?
+  createdAt        DateTime  @default(now())
+
+  users       User[]
+  uploads     Upload[]
+  jobs        AgentJob[]
+  bills       Bill[]
+  flags       Flag[]
+  questions   Question[]
+  events      AgentEvent[]
+  summaries   Summary[]
+  outbox      OutboxEmail[]
+}
+
+model Upload {
+  id           String    @id @default(cuid())
+  clientId     String
+  client       Client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  uploadedById String?
+  uploadedBy   User?     @relation(fields: [uploadedById], references: [id])
+  fileName     String
+  mimeType     String
+  sizeBytes    Int
+  storageKey   String // opaque key understood by src/lib/storage.ts
+  note         String?
+  uploadedAt   DateTime  @default(now())
+  jobs         AgentJob[]
+  bills        Bill[]
+  questions    Question[]
+}
+
+model AgentJob {
+  id         String    @id @default(cuid())
+  uploadId   String
+  upload     Upload    @relation(fields: [uploadId], references: [id], onDelete: Cascade)
+  clientId   String
+  client     Client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  status     String    @default("queued") // "queued" | "reading" | "sorted" | "needs_eyes" | "failed"
+  mode       String    @default("mock") // "mock" | "claude"
+  error      String?
+  createdAt  DateTime  @default(now())
+  startedAt  DateTime?
+  finishedAt DateTime?
+  events     AgentEvent[]
+}
+
+// One extracted document: a bill to pay, a receipt already paid, or an
+// expected recurring bill (e.g. rent) that has no invoice yet.
+model Bill {
+  id              String    @id @default(cuid())
+  clientId        String
+  client          Client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  uploadId        String?
+  upload          Upload?   @relation(fields: [uploadId], references: [id], onDelete: SetNull)
+  kind            String // "bill" | "receipt" | "expected"
+  vendor          String
+  category        String
+  invoiceNumber   String?
+  amountCents     Int
+  docDate         DateTime? // date printed on the document
+  dueDate         DateTime? // stored at 12:00 UTC of the calendar date
+  isPaid          Boolean   @default(false)
+  paidAt          DateTime?
+  lateConfirmedAt DateTime? // client confirmed a late bill is still owed
+  confidence      Float     @default(1)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  flags           Flag[]
+}
+
+model Flag {
+  id        String   @id @default(cuid())
+  clientId  String
+  client    Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  billId    String?
+  bill      Bill?    @relation(fields: [billId], references: [id], onDelete: Cascade)
+  type      String // "double_charge" | "over_usual" | "new_vendor"
+  message   String
+  createdAt DateTime @default(now())
+}
+
+// "Needs your eyes" — a question from Clear Desk to the client.
+model Question {
+  id          String    @id @default(cuid())
+  clientId    String
+  client      Client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  uploadId    String?
+  upload      Upload?   @relation(fields: [uploadId], references: [id], onDelete: SetNull)
+  body        String
+  amountCents Int?
+  status      String    @default("draft") // "draft" (agent wrote it, Richard hasn't approved) | "open" | "answered" | "resolved"
+  createdAt   DateTime  @default(now())
+  publishedAt DateTime?
+  messages    QuestionMessage[]
+}
+
+model QuestionMessage {
+  id         String   @id @default(cuid())
+  questionId String
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  authorId   String
+  author     User     @relation(fields: [authorId], references: [id])
+  body       String
+  createdAt  DateTime @default(now())
+}
+
+model AgentEvent {
+  id        String    @id @default(cuid())
+  clientId  String
+  client    Client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  jobId     String?
+  job       AgentJob? @relation(fields: [jobId], references: [id], onDelete: SetNull)
+  agent     String // "Reader" | "Sorter" | "Checker" | "Summarizer" | "Delivery"
+  action    String // "read" | "sorted" | "flagged" | "drafted" | "approved" | "sent_back" | "logged" | "error"
+  detail    String
+  createdAt DateTime  @default(now())
+}
+
+model Summary {
+  id             String    @id @default(cuid())
+  clientId       String
+  client         Client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  weekStart      DateTime
+  weekEnd        DateTime
+  asOf           DateTime // "today" used for late / 7-day / 30-day buckets
+  status         String // "awaiting_review" | "sent_back" | "approved"
+  introText      String
+  statsJson      String // { receiptsSorted, spentCents, hoursSaved, spending: [{category, cents}] }
+  secondLookJson String // [{ vendor, amountCents, date, message }]
+  needsEyesJson  String // [{ questionId, body, amountCents }]
+  reviewNote     String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  approvedAt     DateTime?
+  approvedById   String?
+  rows           SummaryRow[]
+  outbox         OutboxEmail[]
+
+  @@unique([clientId, asOf]) // one summary per client per scheduled day
+}
+
+// Snapshot of a bill as it appears in a summary. Richard can edit these.
+model SummaryRow {
+  id            String    @id @default(cuid())
+  summaryId     String
+  summary       Summary   @relation(fields: [summaryId], references: [id], onDelete: Cascade)
+  billId        String?
+  vendor        String
+  category      String
+  invoiceNumber String?
+  amountCents   Int
+  dueDate       DateTime
+  expected      Boolean   @default(false) // expected monthly bill, no invoice yet
+  note          String?
+  position      Int
+}
+
+// Emails are never sent from the demo. They are written here instead.
+model OutboxEmail {
+  id        String   @id @default(cuid())
+  clientId  String
+  client    Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  summaryId String?
+  summary   Summary? @relation(fields: [summaryId], references: [id], onDelete: SetNull)
+  to        String
+  subject   String
+  body      String
+  status    String   @default("logged") // "logged" (demo) | "sent" (real provider, later)
+  createdAt DateTime @default(now())
+}
